@@ -1,5 +1,5 @@
-export interface Environment {
-  production: boolean
+export type Environment = {
+  readonly production: boolean
 }
 
 export const environment: Environment = {

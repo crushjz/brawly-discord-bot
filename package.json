@@ -27,7 +27,10 @@
   },
   "private": true,
   "dependencies": {
-    "discord.js": "^12.0.2"
+    "discord.js": "^12.0.2",
+    "fp-ts": "^2.5.3",
+    "monocle-ts": "^2.1.0",
+    "ramda": "^0.27.0"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "^9.1.2",
@@ -38,6 +41,7 @@
     "@nrwl/workspace": "^9.1.2",
     "@types/jest": "^24.9.1",
     "@types/node": "~13.9.1",
+    "@types/ramda": "^0.26.44",
     "@typescript-eslint/eslint-plugin": "2.23.0",
     "@typescript-eslint/parser": "2.23.0",
     "dotenv": "^8.2.0",

@@ -30,7 +30,9 @@
           { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
         ]
       }
-    ]
+    ],
+    "sort-imports": "warn",
+    "functional/functional-parameters": "off"
   },
   "overrides": [
     {
