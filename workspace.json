@@ -1,8 +1,66 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "discord-bot": {
+      "root": "apps/discord-bot",
+      "sourceRoot": "apps/discord-bot/src",
+      "projectType": "application",
+      "prefix": "discord-bot",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/discord-bot",
+            "main": "apps/discord-bot/src/main.ts",
+            "tsConfig": "apps/discord-bot/tsconfig.app.json",
+            "assets": ["apps/discord-bot/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/discord-bot/src/environments/environment.ts",
+                  "with": "apps/discord-bot/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "discord-bot:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/discord-bot/.eslintrc",
+            "tsConfig": [
+              "apps/discord-bot/tsconfig.app.json",
+              "apps/discord-bot/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/discord-bot/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/discord-bot/jest.config.js",
+            "tsConfig": "apps/discord-bot/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/node"
   },
   "schematics": {
     "@nrwl/workspace": {
@@ -59,5 +117,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "discord-bot"
 }
