@@ -32,7 +32,13 @@
       }
     ],
     "sort-imports": "warn",
-    "functional/functional-parameters": "off"
+    "functional/functional-parameters": "off",
+    "functional/prefer-readonly-type": [
+      "warn",
+      {
+        "ignorePattern": ["^mutable"]
+      }
+    ]
   },
   "overrides": [
     {

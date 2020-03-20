@@ -113,6 +113,34 @@
           }
         }
       }
+    },
+    "w-monocle": {
+      "root": "libs/w-monocle",
+      "sourceRoot": "libs/w-monocle/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/w-monocle/.eslintrc",
+            "tsConfig": [
+              "libs/w-monocle/tsconfig.lib.json",
+              "libs/w-monocle/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/w-monocle/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/w-monocle/jest.config.js",
+            "tsConfig": "libs/w-monocle/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

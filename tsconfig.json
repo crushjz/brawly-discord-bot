@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@discord-tournaments-bot/w-fp-ts": ["libs/w-fp-ts/src/index.ts"],
-      "@discord-tournaments-bot/w-ramda": ["libs/w-ramda/src/index.ts"]
+      "@discord-tournaments-bot/w-ramda": ["libs/w-ramda/src/index.ts"],
+      "@discord-tournaments-bot/w-monocle": ["libs/w-monocle/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
