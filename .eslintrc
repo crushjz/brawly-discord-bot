@@ -33,6 +33,7 @@
     ],
     "sort-imports": "warn",
     "functional/functional-parameters": "off",
+    "functional/no-return-void": "off",
     "functional/prefer-readonly-type": [
       "warn",
       {
