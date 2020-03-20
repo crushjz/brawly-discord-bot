@@ -7,10 +7,12 @@ import {
   fromOption,
   fromPredicate,
   getOrElse,
+  getValidation,
   isLeft,
   isRight,
   left,
   map,
+  mapLeft,
   right,
 } from 'fp-ts/lib/Either'
 
@@ -22,8 +24,10 @@ export const eFromNullable = fromNullable
 export const eFromOption = fromOption
 export const eFromPredicate = fromPredicate
 export const eGetOrElse = getOrElse
+export const eGetValidation = getValidation
 export const eIsLeft = isLeft
 export const eIsRight = isRight
 export const eLeft = left
 export const eMap = map
+export const eMapLeft = mapLeft
 export const eRight = right
