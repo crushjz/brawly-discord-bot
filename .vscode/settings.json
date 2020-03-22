@@ -4,5 +4,11 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
+  },
+  "editor.codeActionsOnSaveTimeout": 20000
+  // "editor.formatOnSave": false
 }
