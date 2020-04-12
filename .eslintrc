@@ -31,7 +31,7 @@
         ]
       }
     ],
-    "sort-imports": "warn",
+    "sort-imports": "off",
     "functional/functional-parameters": "off",
     "functional/no-return-void": "off",
     "functional/prefer-readonly-type": [
@@ -46,6 +46,19 @@
       "files": ["*.tsx"],
       "rules": {
         "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx"],
+      "rules": {
+        "functional/no-expression-statement": "off"
+      }
+    },
+    {
+      "files": ["jest.config.js"],
+      "rules": {
+        "functional/immutable-data": "off",
+        "functional/no-expression-statement": "off"
       }
     }
   ]
