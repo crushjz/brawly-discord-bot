@@ -9,6 +9,7 @@ export const App = () => {
   return (
     <StyledApp>
       <Link to="/">Home</Link>
+
       <Link to="/login">Add to Discord</Link>
       {/* <Button variant="primary" as={Link} to="/login">
         Add to Discord
@@ -19,6 +20,7 @@ export const App = () => {
         exact
         render={() => <div>This is the generated root route.</div>}
       />
+
       <Route
         path="/login"
         exact
