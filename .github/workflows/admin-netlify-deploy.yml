@@ -24,14 +24,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-      env:
-        NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: node_modules-${{ hashFiles('**/package-lock.json') }}
+#       env:
+#         NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+#     - name: Cache node modules
+#       uses: actions/cache@v1
+#       with:
+#         path: node_modules
+#         key: node_modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install
     - run: npm run affected:deploy
       env:
         CI: true
+        NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
