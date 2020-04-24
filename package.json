@@ -15,6 +15,7 @@
     "affected:e2e": "nx affected:e2e",
     "affected:test": "nx affected:test",
     "affected:lint": "nx affected:lint",
+    "affected:deploy": "nx affected --target=deploy",
     "affected:dep-graph": "nx affected:dep-graph",
     "affected": "nx affected",
     "format": "nx format:write",
@@ -23,7 +24,10 @@
     "update": "nx migrate latest",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "lint:all": "nx run-many --target=lint --all",
+    "test:all": "nx run-many --target=test --projects=discord-bot,admin",
+    "build:all": "nx run-many --target=build --projects=discord-bot,admin"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +44,7 @@
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
+    "@netlify-builder/deploy": "^3.1.0",
     "@nrwl/cypress": "9.2.3",
     "@nrwl/eslint-plugin-nx": "9.2.3",
     "@nrwl/jest": "9.2.3",
