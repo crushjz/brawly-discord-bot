@@ -55,13 +55,6 @@
             "tsConfig": "apps/discord-bot/tsconfig.spec.json",
             "passWithNoTests": true
           }
-        },
-        "deploy": {
-          "builder": "@netlify-builder/deploy:deploy",
-          "options": {
-            "outputPath": "dist/apps/admin",
-            "siteId": "fce78614-91a5-41e9-81df-ebb2b0770a52"
-          }
         }
       }
     },
@@ -222,6 +215,13 @@
             "jestConfig": "apps/admin/jest.config.js",
             "tsConfig": "apps/admin/tsconfig.spec.json",
             "passWithNoTests": true
+          }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/apps/admin",
+            "siteId": "fce78614-91a5-41e9-81df-ebb2b0770a52"
           }
         }
       }
