@@ -45,7 +45,7 @@ jobs:
         run: npm install
 
       - name: Lint affected (PR)
-        if: github.event.pull_request !== null
+        if: github.event.pull_request
         run: npm run affected:lint
 
         # run: npm run affected:lint --base=${{ github.base_ref }} --head=HEAD
@@ -54,7 +54,7 @@ jobs:
       #   run: npm run affected:test --base=${{ github.base_ref }} --head=HEAD
 
       - name: Lint affected (push)
-        if: github.event.push !== null
+        if: github.event.push
         run: npm run affected:lint
       # - name: Build affected (push)
       #   if: github.event.push
