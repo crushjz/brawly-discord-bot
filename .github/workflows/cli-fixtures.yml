@@ -35,27 +35,29 @@ jobs:
         with:
           path: node_modules
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+        run: npm install
 
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - name: Install dependencies
-        run: npm install
+      # - name: Install dependencies
+      #   run: npm install
+
+      - name: Lint affected TEST (PR)
+        if: github.event.pull_request
+        run: npm run affected:lint
 
       - name: Lint affected (PR)
         if: github.event.pull_request
         run: npm run affected:lint --base=${{ github.base_ref }} --head=HEAD
-
-      - name: Build affected (PR)
-        if: github.event.pull_request
-        run: npm run affected:test --base=${{ github.base_ref }} --head=HEAD
-
-      - name: Lint affected (push)
-        if: github.event.push
-        run: npm run affected:lint --base=HEAD@{1} --head=HEAD
-
-      - name: Build affected (push)
-        if: github.event.push
-        run: npm run affected:test --base=HEAD@{1} --head=HEAD
+      # - name: Build affected (PR)
+      #   if: github.event.pull_request
+      #   run: npm run affected:test --base=${{ github.base_ref }} --head=HEAD
+      # - name: Lint affected (push)
+      #   if: github.event.push
+      #   run: npm run affected:lint --base=HEAD@{1} --head=HEAD
+      # - name: Build affected (push)
+      #   if: github.event.push
+      #   run: npm run affected:test --base=HEAD@{1} --head=HEAD
