@@ -1,18 +1,15 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: CLI Fixtures
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   cli:
     name: CLI Fixtures
-    
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,18 +17,49 @@ jobs:
         node-version: [12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: node_modules-${{ hashFiles('**/package-lock.json') }}
-    - run: npm install
-    - run: npm run affected:lint
-    - run: npm run affected:test
-      env:
-        CI: true
+      - name: Checkout code (PR)
+        if: github.event.pull_request
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Fetch master (PR)
+        if: github.event.pull_request
+        run: git fetch --no-tags --prune --depth=5 origin master
+
+      - name: Checkout code (push)
+        if: github.event.push
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+        env:
+          CI: true
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: node_modules-${{ matrix.node-version }}-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint affected (PR)
+        if: github.event.pull_request
+        run: npm run affected:lint -- --base=origin/${{ github.base_ref }} --head=HEAD
+
+      - name: Test affected (PR)
+        if: github.event.pull_request
+        run: npm run affected:test -- --base=origin/${{ github.base_ref }} --head=HEAD
+
+      - name: Lint affected (push)
+        if: github.event.push
+        run: npm run affected:lint --base=HEAD@{1} --head=HEAD
+
+      - name: Test affected (push)
+        if: github.event.push
+        run: npm run affected:test --base=HEAD@{1} --head=HEAD
