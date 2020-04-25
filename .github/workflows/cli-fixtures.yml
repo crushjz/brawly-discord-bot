@@ -22,6 +22,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      #   with:
+      #       ref: ${{ github.event.pull_request.head.ref }}
+      #       fetch-depth: 0
+      # - run: |
+      #       git fetch --no-tags --prune --depth=5 origin master
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -36,17 +41,17 @@ jobs:
           path: node_modules
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"
 
       - name: Install dependencies
         run: npm install
 
       - name: Lint affected (PR)
         if: github.event.pull_request
-        run: npm run affected:lint
+        run: npm run affected:lint -- --base=origin/${{ github.base_ref }} --head=HEAD
 
         # run: npm run affected:lint --base=${{ github.base_ref }} --head=HEAD
       # - name: Build affected (PR)
