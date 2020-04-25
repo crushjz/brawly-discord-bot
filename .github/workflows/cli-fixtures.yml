@@ -52,7 +52,7 @@ jobs:
         if: github.event.pull_request
         run: npm run affected:lint -- --base=origin/${{ github.base_ref }} --head=HEAD
 
-      - name: Build affected (PR)
+      - name: Test affected (PR)
         if: github.event.pull_request
         run: npm run affected:test -- --base=origin/${{ github.base_ref }} --head=HEAD
 
@@ -60,6 +60,6 @@ jobs:
         if: github.event.push
         run: npm run affected:lint --base=HEAD@{1} --head=HEAD
 
-      - name: Build affected (push)
+      - name: Test affected (push)
         if: github.event.push
         run: npm run affected:test --base=HEAD@{1} --head=HEAD
