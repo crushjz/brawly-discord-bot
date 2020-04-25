@@ -20,13 +20,20 @@ jobs:
         node-version: [12.x, 14.x]
 
     steps:
-      - name: Checkout code
+      - name: Checkout code (PR)
+        if: github.event.pull_request
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - run: |
-          git fetch --no-tags --prune --depth=5 origin master
+
+      - name: Fetch master (PR)
+        if: github.event.pull_request
+        run: git fetch --no-tags --prune --depth=5 origin master
+
+      - name: Checkout code (push)
+        if: github.event.pull_request
+        uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -41,11 +48,6 @@ jobs:
           path: node_modules
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
-      # - name: Dump GitHub context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(github) }}
-      #   run: echo "$GITHUB_CONTEXT"
-
       - name: Install dependencies
         run: npm install
 
@@ -53,14 +55,14 @@ jobs:
         if: github.event.pull_request
         run: npm run affected:lint -- --base=origin/${{ github.base_ref }} --head=HEAD
 
-        # run: npm run affected:lint --base=${{ github.base_ref }} --head=HEAD
-      # - name: Build affected (PR)
-      #   if: github.event.pull_request
-      #   run: npm run affected:test --base=${{ github.base_ref }} --head=HEAD
+      - name: Build affected (PR)
+        if: github.event.pull_request
+        run: npm run affected:test -- --base=origin/${{ github.base_ref }} --head=HEAD
 
       - name: Lint affected (push)
         if: github.event.push
-        run: npm run affected:lint
-      # - name: Build affected (push)
-      #   if: github.event.push
-      #   run: npm run affected:test --base=HEAD@{1} --head=HEAD
+        run: npm run affected:lint --base=HEAD@{1} --head=HEAD
+
+      - name: Build affected (push)
+        if: github.event.push
+        run: npm run affected:test --base=HEAD@{1} --head=HEAD
