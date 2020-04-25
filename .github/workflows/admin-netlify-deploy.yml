@@ -3,6 +3,7 @@ name: Deploy admin to Netlify
 on:
   push:
     branches: [master]
+  # should not deploy on PRs
   # pull_request:
   #   branches: [master]
 
