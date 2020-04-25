@@ -32,7 +32,7 @@ jobs:
         run: git fetch --no-tags --prune --depth=5 origin master
 
       - name: Checkout code (push)
-        if: github.event.pull_request
+        if: github.event.push
         uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
