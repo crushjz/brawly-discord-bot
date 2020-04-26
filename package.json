@@ -25,9 +25,10 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
+    "serve:apps": "nx run-many --target=serve  --projects=discord-bot,admin --parallel",
     "lint:all": "nx run-many --target=lint --all",
-    "test:all": "nx run-many --target=test --projects=discord-bot,admin",
-    "build:all": "nx run-many --target=build --projects=discord-bot,admin"
+    "test:apps": "nx run-many --target=test --projects=discord-bot,admin",
+    "build:apps": "nx run-many --target=build --projects=discord-bot,admin"
   },
   "private": true,
   "dependencies": {
