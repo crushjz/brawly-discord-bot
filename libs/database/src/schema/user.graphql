@@ -1,0 +1,14 @@
+type User {
+  id: ID!
+  email: String!
+  discordToken: String!
+}
+
+type Query {
+  getUsers: [User]
+}
+
+type Mutation {
+  updateUserEmail(id: ID!, email: String!): User
+  updateUserToken(id: ID!, token: String!): User
+}
