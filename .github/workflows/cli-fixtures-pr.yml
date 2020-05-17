@@ -1,8 +1,6 @@
-name: CLI Fixtures
+name: CLI Fixtures (PR)
 
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 
@@ -17,20 +15,14 @@ jobs:
         node-version: [12.x, 14.x]
 
     steps:
-      - name: Checkout code (PR)
-        if: github.event.pull_request
+      - name: Checkout code
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
-      - name: Fetch master (PR)
-        if: github.event.pull_request
+      - name: Fetch master
         run: git fetch --no-tags --prune --depth=5 origin master
-
-      - name: Checkout code (push)
-        if: github.event.push
-        uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -48,18 +40,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Lint affected (PR)
-        if: github.event.pull_request
+      - name: Lint affected
         run: npm run affected:lint -- --base=origin/${{ github.base_ref }} --head=HEAD
 
-      - name: Test affected (PR)
-        if: github.event.pull_request
+      - name: Test affected
         run: npm run affected:test -- --base=origin/${{ github.base_ref }} --head=HEAD
-
-      - name: Lint affected (push)
-        if: github.event.push
-        run: npm run affected:lint --base=HEAD@{1} --head=HEAD
-
-      - name: Test affected (push)
-        if: github.event.push
-        run: npm run affected:test --base=HEAD@{1} --head=HEAD

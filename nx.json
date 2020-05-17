@@ -25,6 +25,9 @@
     },
     "admin": {
       "tags": []
+    },
+    "database": {
+      "tags": []
     }
   }
 }
