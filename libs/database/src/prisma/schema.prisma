@@ -1,4 +1,14 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource postgresql {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  discordToken String @unique
+  email        String
+  id           Int    @default(autoincrement()) @id
 }
