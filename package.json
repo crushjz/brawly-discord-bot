@@ -29,7 +29,8 @@
     "lint:all": "nx run-many --target=lint --all",
     "test:apps": "nx run-many --target=test --projects=discord-bot,admin",
     "test:all": "nx run-many --target=test --all",
-    "build:apps": "nx run-many --target=build --projects=discord-bot,admin"
+    "build:apps": "nx run-many --target=build --projects=discord-bot,admin",
+    "postinstall": "prisma generate --schema=./libs/database/src/prisma/schema.prisma"
   },
   "private": true,
   "dependencies": {
