@@ -28,6 +28,7 @@
     "serve:apps": "nx run-many --target=serve  --projects=discord-bot,admin --parallel",
     "lint:all": "nx run-many --target=lint --all",
     "test:apps": "nx run-many --target=test --projects=discord-bot,admin",
+    "test:all": "nx run-many --target=test --all",
     "build:apps": "nx run-many --target=build --projects=discord-bot,admin"
   },
   "private": true,

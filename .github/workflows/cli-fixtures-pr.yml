@@ -1,0 +1,49 @@
+name: CLI Fixtures
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  cli:
+    name: CLI Fixtures
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Fetch master
+        run: git fetch --no-tags --prune --depth=5 origin master
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+        env:
+          CI: true
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: node_modules-${{ matrix.node-version }}-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint affected
+        run: npm run affected:lint -- --base=origin/${{ github.base_ref }} --head=HEAD
+
+      - name: Test affected
+        run: npm run affected:test -- --base=origin/${{ github.base_ref }} --head=HEAD
