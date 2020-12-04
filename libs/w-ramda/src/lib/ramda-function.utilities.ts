@@ -1,9 +1,7 @@
 import {
-  F,
-  T,
-  __,
   addIndex,
   always,
+  andThen,
   ap,
   apply,
   applySpec,
@@ -22,6 +20,7 @@ import {
   curryN,
   descend,
   empty,
+  F,
   flip,
   identity,
   invoker,
@@ -39,19 +38,21 @@ import {
   partialRight,
   pipe,
   pipeWith,
+  T,
   tap,
-  then,
   thunkify,
   tryCatch,
   unapply,
   unary,
   uncurryN,
   useWith,
+  __,
 } from 'ramda'
 
 export const rPh = __
 export const rAddIndex = addIndex
 export const rAlways = always
+export const rAndThen = andThen
 export const rAp = ap
 export const rApply = apply
 export const rApplySpec = applySpec
@@ -90,7 +91,6 @@ export const rPipe = pipe
 export const rPipeWith = pipeWith
 export const rT = T
 export const rTap = tap
-export const rThen = then
 export const rThunkify = thunkify
 export const rTryCatch = tryCatch
 export const rUnapply = unapply

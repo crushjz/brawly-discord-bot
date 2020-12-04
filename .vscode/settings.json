@@ -9,6 +9,6 @@
     "source.fixAll": true,
     "source.fixAll.eslint": true
   },
-  "editor.codeActionsOnSaveTimeout": 20000
-  // "editor.formatOnSave": false
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.formatOnSave": true
 }

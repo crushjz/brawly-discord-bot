@@ -1,17 +1,22 @@
-// import { createGlobalStyle } from './themed-styled-component'
+import React from 'react'
+import { css, Global, useTheme } from '@emotion/react'
+import { BrawlyTheme } from './theme'
 
-import { createGlobalStyle } from 'styled-components'
+export const GlobalStyle = () => {
+  const theme = useTheme() as BrawlyTheme
 
-export const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: Whitney;
-    src: url("./assets/fonts/whitney.woff") format("woff");
-    font-weight: 300;
-  }
+  const globalCss = css`
+    @font-face {
+      font-family: Whitney;
+      src: url('./assets/fonts/whitney.woff') format('woff');
+      font-weight: 300;
+    }
 
+    body {
+      text-rendering: optimizeLegibility;
+      font-family: ${theme.fonts.body} !important;
+    }
+  `
 
-  body {
-    text-rendering: optimizeLegibility;
-    font-family: ${props => props.theme.fonts.body}
-  }
-`
+  return <Global styles={globalCss} />
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
-import styled from 'styled-components'
-// import { Button } from 'rebass/styled-components'
+import { Button } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 const StyledApp = styled.div``
 
@@ -10,10 +10,9 @@ export const App = () => {
     <StyledApp>
       <Link to="/">Home</Link>
 
-      <Link to="/login">Add to Discord</Link>
-      {/* <Button variant="primary" as={Link} to="/login">
+      <Button as={Link} to="/login">
         Add to Discord
-      </Button> */}
+      </Button>
 
       <Route
         path="/"

@@ -1,4 +1,5 @@
-import { css, createGlobalStyle } from 'styled-components'
+import React from 'react'
+import { css, Global } from '@emotion/react'
 
 // prettier-ignore
 export const reset = css`
@@ -55,4 +56,4 @@ table {
 }
 `
 
-export const ResetCss = createGlobalStyle`${reset}`
+export const ResetCss = () => <Global styles={reset} />

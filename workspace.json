@@ -271,15 +271,15 @@
     },
     "@nrwl/react": {
       "application": {
-        "style": "styled-components",
+        "style": "emotion",
         "linter": "eslint",
         "babel": true
       },
       "component": {
-        "style": "styled-components"
+        "style": "emotion"
       },
       "library": {
-        "style": "styled-components",
+        "style": "emotion",
         "linter": "eslint"
       }
     },
