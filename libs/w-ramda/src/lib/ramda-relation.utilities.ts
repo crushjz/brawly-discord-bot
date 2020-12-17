@@ -49,7 +49,8 @@ export const rPathEq = pathEq
 export const rPropEq = <TKey extends keyof any, TValue>(
   key: TKey,
   value: TValue
-) => <TV extends TValue>(obj: { [TK1 in TKey]: TV }) => obj[key] === value
+) => <TV extends TValue>(obj: { readonly [TK1 in TKey]: TV }) =>
+  obj[key] === value
 export const rSortBy = sortBy
 export const rSortWith = sortWith
 export const rSymmetricDifference = symmetricDifference

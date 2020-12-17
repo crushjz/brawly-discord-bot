@@ -28,6 +28,9 @@
     },
     "database": {
       "tags": []
+    },
+    "api": {
+      "tags": []
     }
   }
 }

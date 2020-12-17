@@ -7,6 +7,7 @@ WIP
 - Install dependencies with `npm install`
 - Run discord bot with `npm run nx serve discord-bot`
 - Run the admin management interface with `npm run nx serve admin`
+- Run the GraphQL server with `npm run nx serve api`
 
 To create a new `nx` lib package:
 
