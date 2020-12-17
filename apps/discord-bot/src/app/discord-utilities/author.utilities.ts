@@ -1,6 +1,6 @@
 import { Message, PartialMessage } from 'discord.js'
-import { fpFlow } from '@discord-tournaments-bot/w-fp-ts'
-import { rNot } from '@discord-tournaments-bot/w-ramda'
+import { fpFlow } from '@brawly/w-fp-ts'
+import { rNot } from '@brawly/w-ramda'
 
 export const isMessageFromBot = (m: Message | PartialMessage): boolean =>
   m.author.bot

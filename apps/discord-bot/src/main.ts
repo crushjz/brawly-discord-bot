@@ -6,7 +6,7 @@ import {
   onError,
   use,
 } from './app/matchers/matcher'
-import { fpFlow, fpIdentity } from '@discord-tournaments-bot/w-fp-ts'
+import { fpFlow, fpIdentity } from '@brawly/w-fp-ts'
 import { brawlyCommandPrefix } from './app/brawly-commands/constants'
 import { config } from 'dotenv'
 

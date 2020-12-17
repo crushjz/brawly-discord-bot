@@ -1,4 +1,4 @@
-import { PrismaClient } from '@discord-tournaments-bot/database'
+import { PrismaClient } from '@brawly/database'
 
 const prisma = new PrismaClient()
 

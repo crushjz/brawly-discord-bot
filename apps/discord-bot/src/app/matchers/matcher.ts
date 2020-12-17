@@ -13,9 +13,9 @@ import {
   eMapLeft,
   eRight,
   fpPipe,
-} from '@discord-tournaments-bot/w-fp-ts'
-import { lFromProp, lGet, lSet } from '@discord-tournaments-bot/w-monocle'
-import { rStartsWith } from '@discord-tournaments-bot/w-ramda'
+} from '@brawly/w-fp-ts'
+import { lFromProp, lGet, lSet } from '@brawly/w-monocle'
+import { rStartsWith } from '@brawly/w-ramda'
 
 // TYPES
 

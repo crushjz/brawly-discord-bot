@@ -16,10 +16,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@discord-tournaments-bot/w-fp-ts": ["libs/w-fp-ts/src/index.ts"],
-      "@discord-tournaments-bot/w-ramda": ["libs/w-ramda/src/index.ts"],
-      "@discord-tournaments-bot/w-monocle": ["libs/w-monocle/src/index.ts"],
-      "@discord-tournaments-bot/database": ["libs/database/src/index.ts"]
+      "@brawly/w-fp-ts": ["libs/w-fp-ts/src/index.ts"],
+      "@brawly/w-ramda": ["libs/w-ramda/src/index.ts"],
+      "@brawly/w-monocle": ["libs/w-monocle/src/index.ts"],
+      "@brawly/database": ["libs/database/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
