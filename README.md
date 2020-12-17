@@ -4,10 +4,13 @@ WIP
 
 ## Development
 
-- Install dependencies with `npm install`
-- Run discord bot with `npm run nx serve discord-bot`
-- Run the admin management interface with `npm run nx serve admin`
-- Run the GraphQL server with `npm run nx serve api`
+Install dependencies with `npm install` and run one of the app with `npm run nx serve discord-bot|admin|api`
+
+To serve all the apps at the same time use:
+
+```
+npm run serve:apps
+```
 
 To create a new `nx` lib package:
 
@@ -15,11 +18,19 @@ To create a new `nx` lib package:
 npx nx g @nrwl/workspace:lib libname
 ```
 
-To create a new `nx` app package:
+To create a new `nx` appplication:
 
 ```
 npx nx g @nrwl/node:app appname
 ```
+
+```
+nx run [project]:[serve|lint|build|test]:[configuration]
+```
+
+`nx` CLI documentation:
+
+https://nx.dev/latest/react/cli/overview
 
 ### Database
 

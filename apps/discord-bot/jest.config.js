@@ -1,5 +1,14 @@
 module.exports = {
-  name: 'discord-bot',
-  preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/apps/discord-bot'
-};
+  displayName: 'discord-bot',
+  preset: '../../jest.preset.js',
+  globals: {
+    'ts-jest': {
+      tsConfig: '<rootDir>/tsconfig.spec.json',
+    },
+  },
+  transform: {
+    '^.+\\.[tj]s$': 'ts-jest',
+  },
+  moduleFileExtensions: ['ts', 'js', 'html'],
+  coverageDirectory: '../../coverage/apps/discord-bot',
+}

@@ -1,9 +1,11 @@
 module.exports = {
-  testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
-  transform: {
-    '^.+\\.(ts|js|html)$': 'ts-jest',
-  },
-  resolver: '@nrwl/jest/plugins/resolver',
-  moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageReporters: ['html'],
+  projects: [
+    '<rootDir>/apps/discord-bot',
+    '<rootDir>/apps/admin',
+    '<rootDir>/apps/api',
+    '<rootDir>/libs/w-fp-ts',
+    '<rootDir>/libs/w-ramda',
+    '<rootDir>/libs/w-monocle',
+    '<rootDir>/libs/database',
+  ],
 }

@@ -10,12 +10,14 @@ import { brawlyTheme } from './app/theme/theme'
 /* eslint-disable functional/no-expression-statement */
 
 ReactDOM.render(
-  <BrowserRouter>
-    <ChakraProvider theme={brawlyTheme}>
-      <ResetCss />
-      <GlobalStyle />
-      <App />
-    </ChakraProvider>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <ChakraProvider theme={brawlyTheme}>
+        <ResetCss />
+        <GlobalStyle />
+        <App />
+      </ChakraProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
   document.getElementById('root')
 )

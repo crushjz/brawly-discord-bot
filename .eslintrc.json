@@ -1,0 +1,62 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx", "prettier"],
+  "extends": ["prettier/@typescript-eslint", "plugin:prettier/recommended"],
+  "rules": {
+    // "linebreak-style": ["error", "windows"],
+    "prettier/prettier": ["warn"]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint", "functional"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:functional/external-recommended",
+        "plugin:functional/recommended"
+      ],
+      "parserOptions": { "project": "./tsconfig.*?.json" },
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "functional/functional-parameters": "off",
+        "functional/no-return-void": "off",
+        "functional/prefer-type-literal": "off",
+        "functional/prefer-readonly-type": [
+          "warn",
+          {
+            "ignorePattern": ["^mutable"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    }
+  ]
+}
