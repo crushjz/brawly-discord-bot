@@ -3,7 +3,7 @@ import { Optional } from 'monocle-ts'
 
 // Copy-paste from monocle-ts index.d.ts: Needed to type `loFromOptionProp`
 type OptionPropertyNames<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [TKey in keyof T]-?: T[TKey] extends Option<any> ? TKey : never
 }[keyof T]
 
