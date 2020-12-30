@@ -2,9 +2,10 @@
 import 'reflect-metadata'
 import { IsEmail } from 'class-validator'
 import { ObjectType, Field, ID } from 'type-graphql'
+import { User } from '../user/user.types'
 
 @ObjectType()
-export class User {
+export class UserTql implements User {
   @Field(() => ID)
   readonly id: number
 

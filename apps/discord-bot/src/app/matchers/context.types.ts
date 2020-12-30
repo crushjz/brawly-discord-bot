@@ -4,7 +4,7 @@ import { Either } from 'fp-ts/lib/Either'
 export type Context<T> = {
   readonly message: Message | PartialMessage
   readonly content: string
-  readonly data: T
+  readonly data?: T
 }
 
 export type ContextMatchError =

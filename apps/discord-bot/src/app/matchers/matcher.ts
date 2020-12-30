@@ -5,7 +5,7 @@ import {
   defaultContextMatchErrorNoCatch,
   isContextMatchErrorCatch,
 } from './context.types'
-import { Message, PartialMessage } from 'discord.js'
+import { Message } from 'discord.js'
 import {
   eChain,
   eFromPredicate,
@@ -30,7 +30,7 @@ export const createSetContextContentLens = <T>() =>
 // Context INIT
 
 export const createContext = <T = undefined>(data?: T) => (
-  message: Message | PartialMessage
+  message: Message
 ): EitherContext<T> =>
   eRight({
     message,
@@ -47,7 +47,7 @@ export const excludeSelf = (
     context,
     eChain(
       eFromPredicate(
-        ({ message }) => !message.author.bot,
+        ({ message }) => !message.author?.bot,
         () => error
       )
     )

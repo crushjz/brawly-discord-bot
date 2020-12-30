@@ -32,6 +32,17 @@ nx run [project]:[serve|lint|build|test]:[configuration]
 
 https://nx.dev/latest/react/cli/overview
 
+### Discord App
+
+Create a `.env` in the root of the project, containing:
+
+```
+DISCORD_CLIENT_ID=...
+DISCORD_CLIENT_SECRET=...
+```
+
+TODO
+
 ### Database
 
 Setup PostgreSQL with docker:
@@ -46,7 +57,7 @@ Postgres connection: `postgresql://brawly:brawly@localhost:5432/brawly?schema=pu
 
 ### Database with prisma
 
-Create a `.env` file containing the database connection next to the `schema.prisma` file
+Create a `.env` in `./libs/database/src/prisma/.env` file containing the database connection next to the `schema.prisma` file in this location:
 
 ```
 DATABASE_URL=postgresql://postgres:brawly@localhost:5432/brawly?schema=public

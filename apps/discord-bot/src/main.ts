@@ -1,4 +1,4 @@
-import { Client, Message, PartialMessage } from 'discord.js'
+import { Client, Message } from 'discord.js'
 import {
   createContext,
   excludeSelf,
@@ -20,11 +20,11 @@ const discordToken = process.env.DISCORD_TOKEN
 const client = new Client()
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`)
+  console.log(`Logged in as ${client.user?.tag}!`)
 })
 
 const matchBrawlyCommand = fpFlow(
-  fpIdentity<Message | PartialMessage>(), // Given a discord message
+  fpIdentity<Message>(), // Given a discord message
   createContext(),
   excludeSelf(),
   matchPrefix(brawlyCommandPrefix),

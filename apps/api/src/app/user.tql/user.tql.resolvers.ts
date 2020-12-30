@@ -1,14 +1,14 @@
 /* eslint-disable functional/no-class */
 
-import { User } from './user.tql.types'
+import { UserTql } from './user.tql.types'
 import { UserArgs } from './user.tql.args'
 import { Resolver, Query, Arg, Mutation, Ctx, Args, Int } from 'type-graphql'
 import { SignupUserInput, UpdateUserInput } from './user.tql.inputs'
 import type { Context } from '../context.tql'
 
-@Resolver(User)
+@Resolver(UserTql)
 export class UserResolver {
-  @Query(() => User, { nullable: true })
+  @Query(() => UserTql, { nullable: true })
   async user(@Arg('id', () => Int) id: number, @Ctx() { prisma }: Context) {
     const user = await prisma.user.findUnique({
       where: { id },
@@ -16,7 +16,7 @@ export class UserResolver {
     return user
   }
 
-  @Query(() => [User])
+  @Query(() => [UserTql])
   async users(@Args() { skip, take }: UserArgs, @Ctx() { prisma }: Context) {
     return await prisma.user.findMany({
       skip,
@@ -24,12 +24,12 @@ export class UserResolver {
     })
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserTql)
   // @Authorized()
   async signupUser(
     @Arg('newUserData') { email, discordToken }: SignupUserInput,
     @Ctx() { prisma }: Context
-  ): Promise<User> {
+  ): Promise<UserTql> {
     return prisma.user.create({
       data: {
         email,
@@ -38,12 +38,12 @@ export class UserResolver {
     })
   }
 
-  @Mutation(() => User, { nullable: true })
+  @Mutation(() => UserTql, { nullable: true })
   // @Authorized()
   async updateUser(
     @Arg('data') { id, name }: UpdateUserInput,
     @Ctx() { prisma }: Context
-  ): Promise<User> {
+  ): Promise<UserTql> {
     return prisma.user.update({
       where: { id },
       data: {
@@ -52,7 +52,7 @@ export class UserResolver {
     })
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserTql)
   // @Authorized(Roles.Admin)
   async removeUser(@Arg('id') id: number, @Ctx() { prisma }: Context) {
     return await prisma.user.delete({
