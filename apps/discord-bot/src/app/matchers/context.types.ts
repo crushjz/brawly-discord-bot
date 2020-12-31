@@ -1,10 +1,19 @@
 import { Message, PartialMessage } from 'discord.js'
 import { Either } from 'fp-ts/lib/Either'
+import { BrawlyCommands } from '../brawly-commands/commands-list'
 
 export type Context<T> = {
   readonly message: Message | PartialMessage
   readonly content: string
-  readonly data?: T
+  readonly data: T
+}
+
+export type WithPrefix = {
+  readonly prefix: string
+}
+
+export type WithCommand = {
+  readonly command: BrawlyCommands
 }
 
 export type ContextMatchError =

@@ -1,14 +1,16 @@
 import { Client, Message } from 'discord.js'
 import {
   createContext,
-  excludeSelf,
+  excludeBot,
+  matchOnce,
   matchPrefix,
   onError,
   use,
-} from './app/matchers/matcher'
+} from './app/matchers/matchers'
 import { fpFlow, fpIdentity } from '@brawly/w-fp-ts'
 import { brawlyCommandPrefix } from './app/brawly-commands/constants'
 import { config } from 'dotenv'
+import { brawlySignupCommandHandler } from './app/brawly-commands/signup-command'
 
 /* eslint-disable functional/no-expression-statement */
 
@@ -23,11 +25,13 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user?.tag}!`)
 })
 
-const matchBrawlyCommand = fpFlow(
+// Test command
+const testBrawlyCommandHandler = fpFlow(
   fpIdentity<Message>(), // Given a discord message
-  createContext(),
-  excludeSelf(),
+  createContext({}),
+  excludeBot(),
   matchPrefix(brawlyCommandPrefix),
+  matchOnce(),
   use(({ content, message }) => {
     console.log('content: ', content)
     message.reply(`You said: ${message.content}`)
@@ -37,7 +41,8 @@ const matchBrawlyCommand = fpFlow(
   })
 )
 
-client.on('message', matchBrawlyCommand)
+client.on('message', testBrawlyCommandHandler)
+client.on('message', brawlySignupCommandHandler)
 
 // Login
 client.login(discordToken)
