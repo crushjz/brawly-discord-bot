@@ -1,11 +1,11 @@
 import {
   Context,
-  ContextMatchError,
   EitherContext,
-  defaultContextMatchErrorNoCatch,
-  isContextMatchErrorCatch,
+  defaultContextMatchError,
   WithCommand,
   WithPrefix,
+  ContextExceptionError,
+  ContextError,
 } from './context.types'
 import { Message } from 'discord.js'
 import {
@@ -15,20 +15,18 @@ import {
   eMapLeft,
   eRight,
   fpPipe,
+  iOf,
+  oFold,
+  oFromPredicate,
 } from '@brawly/w-fp-ts'
-import { lFromProp, lGet, lSet } from '@brawly/w-monocle'
 import { rReplace, rStartsWith, rTrim } from '@brawly/w-ramda'
 import { BrawlyCommands } from '../brawly-commands/commands-list'
-
-// TYPES
-
-// Context<T> LENSES
-export const createContextContentLens = <T>() =>
-  lFromProp<Context<T>>()('content')
-export const createGetContextContentLens = <T>() =>
-  lGet(createContextContentLens<T>())
-export const createSetContextContentLens = <T>() =>
-  lSet(createContextContentLens<T>())
+import {
+  isContextExceptionError,
+  isContextMatchError,
+} from './context.types.guards'
+import { IO } from 'fp-ts/lib/IO'
+import { createGetContextContentLens } from './context.types.lenses'
 
 // Context INIT
 
@@ -43,9 +41,11 @@ export const createContext = <T>(data: T) => (
 
 // MATCHERS
 
-export const excludeBot = (
-  error: ContextMatchError = defaultContextMatchErrorNoCatch
-) => <T>(context: EitherContext<T>) =>
+export const excludeBot = (error: ContextError = defaultContextMatchError) => <
+  T
+>(
+  context: EitherContext<T>
+) =>
   fpPipe(
     context,
     eChain(
@@ -58,7 +58,7 @@ export const excludeBot = (
 
 export const matchAuthor = (
   author: 'user' | 'bot',
-  error: ContextMatchError = defaultContextMatchErrorNoCatch
+  error: ContextError = defaultContextMatchError
 ) => <T>(context: EitherContext<T>) =>
   fpPipe(
     context,
@@ -72,10 +72,7 @@ export const matchAuthor = (
     )
   )
 
-export const matchOnce = (
-  error: ContextMatchError = defaultContextMatchErrorNoCatch
-) => {
-  // eslint-disable-next-line functional/no-let
+export const matchOnce = (error: ContextError = defaultContextMatchError) => {
   let mutableMatched = false
   return <T>(context: EitherContext<T>) =>
     fpPipe(
@@ -87,7 +84,6 @@ export const matchOnce = (
         )
       ),
       eMap(e => {
-        // eslint-disable-next-line functional/no-expression-statement
         mutableMatched = true
         return e
       })
@@ -99,7 +95,7 @@ const contextContentStartsWith = (v: string) => <T>(context: Context<T>) =>
 
 export const matchPrefix = (
   prefix: string,
-  error: ContextMatchError = defaultContextMatchErrorNoCatch
+  error: ContextError = defaultContextMatchError
 ) => <T>(context: EitherContext<T>): EitherContext<T & WithPrefix> =>
   fpPipe(
     context,
@@ -118,7 +114,7 @@ export const matchPrefix = (
 
 export const matchCommand = (command: BrawlyCommands) => <T>(
   context: EitherContext<T>,
-  error: ContextMatchError = defaultContextMatchErrorNoCatch
+  error: ContextError = defaultContextMatchError
 ): EitherContext<T & WithCommand> =>
   fpPipe(
     context,
@@ -152,19 +148,38 @@ export const use = <T1>(handler: (c: Context<T1>) => void) => (
     })
   )
 
-export const onError = <T>(handler: (err: ContextMatchError) => void) => (
+export const onMatchError = <T>(handler: (err: ContextError) => IO<void>) => (
   context: EitherContext<T>
 ) =>
   fpPipe(
     context,
+    // TODO: don't do side effects inside a map function
     eMapLeft(err => {
-      // TODO: No if
-      // eslint-disable-next-line functional/no-conditional-statement
-      if (isContextMatchErrorCatch(err)) {
-        // TODO: don't do side effects inside a map function
-        // eslint-disable-next-line functional/no-expression-statement
-        handler(err)
-      }
+      const sEfExecuteHandler = fpPipe(
+        err,
+        oFromPredicate(isContextMatchError),
+        oFold(() => iOf(void 0), handler)
+      )
+      sEfExecuteHandler()
+
+      return err
+    })
+  )
+
+export const onError = <T>(
+  handler: (err: ContextExceptionError) => IO<void>
+) => (context: EitherContext<T>) =>
+  fpPipe(
+    context,
+    // TODO: don't do side effects inside a map function
+    eMapLeft(err => {
+      const sEfExecuteHandler = fpPipe(
+        err,
+        oFromPredicate(isContextExceptionError),
+        oFold(() => iOf(void 0), handler)
+      )
+      sEfExecuteHandler()
+
       return err
     })
   )

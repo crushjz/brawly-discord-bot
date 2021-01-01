@@ -1,4 +1,5 @@
 export * from './lib/fp-ts-array.utilities'
+export * from './lib/fp-ts-console.utilities'
 export * from './lib/fp-ts-either.utilities'
 export * from './lib/fp-ts-eq.utilities'
 export * from './lib/fp-ts-function.utilities'

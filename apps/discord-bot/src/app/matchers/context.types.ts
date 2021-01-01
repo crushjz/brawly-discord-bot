@@ -1,9 +1,9 @@
-import { Message, PartialMessage } from 'discord.js'
+import { Message } from 'discord.js'
 import { Either } from 'fp-ts/lib/Either'
 import { BrawlyCommands } from '../brawly-commands/commands-list'
 
 export type Context<T> = {
-  readonly message: Message | PartialMessage
+  readonly message: Message
   readonly content: string
   readonly data: T
 }
@@ -16,28 +16,23 @@ export type WithCommand = {
   readonly command: BrawlyCommands
 }
 
-export type ContextMatchError =
-  | ContextMatchErrorCatch
-  | ContextMatchErrorNoCatch
+export type ContextError = ContextExceptionError | ContextMatchError
 
-export type ContextMatchErrorCatch = {
-  readonly catch: true
+export const enum ContextErrorType {
+  Match = 'match',
+  Exception = 'exception',
+}
+
+export type ContextExceptionError = {
+  readonly type: ContextErrorType.Exception
   readonly message: string
 }
-export type ContextMatchErrorNoCatch = {
-  readonly catch: false
+export type ContextMatchError = {
+  readonly type: ContextErrorType.Match
 }
 
-export const isContextMatchErrorCatch = (
-  a: ContextMatchError
-): a is ContextMatchErrorCatch => a.catch === true
-
-export const isContextMatchErrorNoCatch = (
-  a: ContextMatchError
-): a is ContextMatchErrorNoCatch => a.catch === false
-
-export const defaultContextMatchErrorNoCatch: ContextMatchErrorNoCatch = {
-  catch: false,
+export const defaultContextMatchError: ContextMatchError = {
+  type: ContextErrorType.Match,
 }
 
-export type EitherContext<T> = Either<ContextMatchError, Context<T>>
+export type EitherContext<T> = Either<ContextError, Context<T>>

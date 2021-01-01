@@ -60,6 +60,18 @@
           {
             "ignorePattern": ["^mutable"]
           }
+        ],
+        "functional/no-let": [
+          "warn",
+          {
+            "ignorePattern": ["^mutable"]
+          }
+        ],
+        "functional/no-expression-statement": [
+          "warn",
+          {
+            "ignorePattern": ["^mutable", "^sEf", "^sideEffect"]
+          }
         ]
       }
     },

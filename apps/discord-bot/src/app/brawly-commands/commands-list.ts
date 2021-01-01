@@ -5,4 +5,5 @@ export const enum BrawlyCommands {
 
 export const brawlyCommands: ReadonlyArray<BrawlyCommands> = [
   BrawlyCommands.Signup,
+  BrawlyCommands.ListTournaments,
 ]

@@ -7,7 +7,7 @@ import {
   onError,
   use,
 } from './app/matchers/matchers'
-import { fpFlow, fpIdentity } from '@brawly/w-fp-ts'
+import { fpFlow, fpIdentity, fpLog } from '@brawly/w-fp-ts'
 import { brawlyCommandPrefix } from './app/brawly-commands/constants'
 import { config } from 'dotenv'
 import { brawlySignupCommandHandler } from './app/brawly-commands/signup-command'
@@ -36,9 +36,7 @@ const testBrawlyCommandHandler = fpFlow(
     console.log('content: ', content)
     message.reply(`You said: ${message.content}`)
   }),
-  onError(err => {
-    console.log('Error: ', err)
-  })
+  onError(fpLog)
 )
 
 client.on('message', testBrawlyCommandHandler)

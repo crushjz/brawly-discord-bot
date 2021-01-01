@@ -9,7 +9,7 @@ import {
   TextChannel,
   User,
 } from 'discord.js'
-import { EitherContext } from './context.types'
+import { ContextErrorType, EitherContext } from './context.types'
 import { matchAuthor } from './matchers'
 
 /* eslint-disable functional/no-expression-statement */
@@ -107,7 +107,7 @@ const messageMock = new Message(
   textChannelMock
 )
 
-test('matchers - should matchAuthor user when message is from user', () => {
+test('matchers - matchAuthor() - should match author user when message is from user', () => {
   const context: EitherContext<Record<string, never>> = eRight({
     content: '',
     message: messageMock,
@@ -119,7 +119,7 @@ test('matchers - should matchAuthor user when message is from user', () => {
   expect(result).toEqual(context)
 })
 
-test('matchers - should not matchAuthor bot when message is from user', () => {
+test('matchers - matchAuthor() - should not match author bot when message is from user', () => {
   const context: EitherContext<Record<string, never>> = eRight({
     content: '',
     message: messageMock,
@@ -129,7 +129,7 @@ test('matchers - should not matchAuthor bot when message is from user', () => {
   const result = matchAuthor('bot')(context)
 
   const expected: EitherContext<Record<string, never>> = eLeft({
-    catch: false,
+    type: ContextErrorType.Match,
   })
 
   expect(result).toEqual(expected)
