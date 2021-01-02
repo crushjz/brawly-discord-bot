@@ -1,5 +1,6 @@
 import { Message } from 'discord.js'
-import { Either } from 'fp-ts/lib/Either'
+import { Either } from 'fp-ts/Either'
+import { TaskEither } from 'fp-ts/TaskEither'
 import { BrawlyCommands } from '../brawly-commands/commands-list'
 
 export type Context<T> = {
@@ -31,8 +32,6 @@ export type ContextMatchError = {
   readonly type: ContextErrorType.Match
 }
 
-export const defaultContextMatchError: ContextMatchError = {
-  type: ContextErrorType.Match,
-}
-
 export type EitherContext<T> = Either<ContextError, Context<T>>
+
+export type TaskEitherContext<T> = TaskEither<ContextError, Context<T>>

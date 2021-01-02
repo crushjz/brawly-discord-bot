@@ -1,2 +1,2 @@
-export * from './lib/monocle-lens.utilities'
-export * from './lib/monocle-optional.utilities'
+export * from './lib/monocle.lens'
+export * from './lib/monocle.optional'

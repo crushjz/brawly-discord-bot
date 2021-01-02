@@ -18,7 +18,7 @@ import {
   reduce,
   some,
   toNullable,
-} from 'fp-ts/lib/Option'
+} from 'fp-ts/Option'
 
 export const oAlt = alt
 export const oChain = chain

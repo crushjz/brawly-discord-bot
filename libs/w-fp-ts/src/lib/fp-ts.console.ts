@@ -1,4 +1,4 @@
-import { error, info, log, warn } from 'fp-ts/lib/Console'
+import { error, info, log, warn } from 'fp-ts/Console'
 
 export const fpError = error
 export const fpInfo = info

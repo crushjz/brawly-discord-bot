@@ -1,5 +1,6 @@
 export const enum BrawlyCommands {
   Signup = 'signup',
+  React = 'react',
   ListTournaments = 'list-tournaments',
 }
 

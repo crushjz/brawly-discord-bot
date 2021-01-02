@@ -1,4 +1,4 @@
-import { chain, getSemigroup, head, map, of } from 'fp-ts/lib/NonEmptyArray'
+import { chain, getSemigroup, head, map, of } from 'fp-ts/NonEmptyArray'
 
 export const fpNeaChain = chain
 export const fpNeaGetSemigroup = getSemigroup

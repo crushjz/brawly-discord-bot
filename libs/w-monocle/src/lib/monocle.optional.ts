@@ -1,4 +1,4 @@
-import { Option } from 'fp-ts/lib/Option'
+import { Option } from 'fp-ts/Option'
 import { Optional } from 'monocle-ts'
 
 // Copy-paste from monocle-ts index.d.ts: Needed to type `loFromOptionProp`

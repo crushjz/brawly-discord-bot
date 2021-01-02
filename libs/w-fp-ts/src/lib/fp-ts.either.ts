@@ -1,6 +1,7 @@
 import {
   alt,
   chain,
+  chainW,
   filterOrElse,
   fold,
   fromNullable,
@@ -14,10 +15,11 @@ import {
   map,
   mapLeft,
   right,
-} from 'fp-ts/lib/Either'
+} from 'fp-ts/Either'
 
 export const eAlt = alt
 export const eChain = chain
+export const eChainW = chainW
 export const eFilterOrElse = filterOrElse
 export const eFold = fold
 export const eFromNullable = fromNullable

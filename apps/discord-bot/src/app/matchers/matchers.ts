@@ -1,14 +1,4 @@
 import {
-  Context,
-  EitherContext,
-  defaultContextMatchError,
-  WithCommand,
-  WithPrefix,
-  ContextExceptionError,
-  ContextError,
-} from './context.types'
-import { Message } from 'discord.js'
-import {
   eChain,
   eFromPredicate,
   eMap,
@@ -19,14 +9,31 @@ import {
   oFold,
   oFromPredicate,
 } from '@brawly/w-fp-ts'
-import { rReplace, rStartsWith, rTrim } from '@brawly/w-ramda'
+import { Message } from 'discord.js'
+import { IO } from 'fp-ts/IO'
 import { BrawlyCommands } from '../brawly-commands/commands-list'
+import {
+  isMessageFromBot,
+  isMessageFromUser,
+} from '../discord-utilities/author.utilities'
+import { defaultContextMatchError } from './context.defaults'
+import {
+  Context,
+  ContextError,
+  ContextExceptionError,
+  EitherContext,
+  WithCommand,
+  WithPrefix,
+} from './context.types'
 import {
   isContextExceptionError,
   isContextMatchError,
 } from './context.types.guards'
-import { IO } from 'fp-ts/lib/IO'
-import { createGetContextContentLens } from './context.types.lenses'
+import {
+  contextContentStartsWith,
+  setContextCommand,
+  setContextPrefix,
+} from './matchers.utilities'
 
 // Context INIT
 
@@ -65,8 +72,8 @@ export const matchAuthor = (
     eChain(
       eFromPredicate(
         ({ message }) =>
-          (author === 'bot' && !!message.author?.bot) ||
-          (author === 'user' && !message.author?.bot),
+          (author === 'bot' && isMessageFromBot(message)) ||
+          (author === 'user' && isMessageFromUser(message)),
         () => error
       )
     )
@@ -90,9 +97,6 @@ export const matchOnce = (error: ContextError = defaultContextMatchError) => {
     )
 }
 
-const contextContentStartsWith = (v: string) => <T>(context: Context<T>) =>
-  fpPipe(context, createGetContextContentLens(), rStartsWith(v))
-
 export const matchPrefix = (
   prefix: string,
   error: ContextError = defaultContextMatchError
@@ -100,35 +104,23 @@ export const matchPrefix = (
   fpPipe(
     context,
     eChain(eFromPredicate(contextContentStartsWith(prefix), () => error)),
-    eMap(
-      (ctx): Context<T & WithPrefix> => ({
-        ...ctx,
-        content: ctx.content.replace(prefix, ''),
-        data: {
-          ...ctx.data,
-          prefix: prefix,
-        },
-      })
-    )
+    eMap(setContextPrefix(prefix))
   )
 
-export const matchCommand = (command: BrawlyCommands) => <T>(
-  context: EitherContext<T>,
+export const matchWith = <T>(
+  predicate: (context: Context<T>) => boolean,
   error: ContextError = defaultContextMatchError
-): EitherContext<T & WithCommand> =>
+) => (context: EitherContext<T>): EitherContext<T> =>
+  fpPipe(context, eChain(eFromPredicate(predicate, () => error)))
+
+export const matchCommand = (
+  command: BrawlyCommands,
+  error: ContextError = defaultContextMatchError
+) => <T>(context: EitherContext<T>): EitherContext<T & WithCommand> =>
   fpPipe(
     context,
     eChain(eFromPredicate(contextContentStartsWith(command), () => error)),
-    eMap(
-      (ctx): Context<T & WithCommand> => ({
-        ...ctx,
-        content: fpPipe(ctx.content, rReplace(command, ''), rTrim),
-        data: {
-          ...ctx.data,
-          command: command,
-        },
-      })
-    )
+    eMap(setContextCommand(command))
   )
 
 export const transform = <T1, TR>(handler: (c: Context<T1>) => Context<TR>) => (

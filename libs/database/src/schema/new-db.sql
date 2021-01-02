@@ -1,5 +1,6 @@
 CREATE TABLE "public"."User" (
 	"id" SERIAL PRIMARY KEY,
 	"email" VARCHAR(255) NOT NULL,
-	"discordToken" VARCHAR(255) UNIQUE NOT NULL
+	"discordToken" VARCHAR(255) UNIQUE NOT NULL,
+	"name" VARCHAR(255) NULL
 );

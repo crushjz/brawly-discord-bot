@@ -1,4 +1,4 @@
-import { fpFlow, fpIdentity } from '@brawly/w-fp-ts'
+import { fpFlow, given } from '@brawly/w-fp-ts'
 import { Message } from 'discord.js'
 import {
   createContext,
@@ -11,7 +11,7 @@ import { BrawlyCommands } from './commands-list'
 import { brawlyCommandPrefix } from './constants'
 
 export const brawlySignupCommandHandler = fpFlow(
-  fpIdentity<Message>(), // Given a discord message
+  given<Message>(), // Given a discord message
   createContext({}),
   excludeBot(),
   matchPrefix(brawlyCommandPrefix),
